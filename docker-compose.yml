@@ -1,0 +1,58 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ipswich_db
+      POSTGRES_USER: ipswich_user
+      POSTGRES_PASSWORD: ipswich_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ipswich_user -d ipswich_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    command: sh -c "python manage.py migrate && python manage.py loaddata products && gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3"
+    environment:
+      DEBUG: "False"
+      SECRET_KEY: "compose-production-key-ipswich-retail"
+      ALLOWED_HOSTS: "*"
+      DATABASE_URL: "postgres://ipswich_user:ipswich_pass@db:5432/ipswich_db"
+      CSRF_TRUSTED_ORIGINS: "http://localhost:8000,http://127.0.0.1:8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    depends_on:
+      - web
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+
+volumes:
+  postgres_data:

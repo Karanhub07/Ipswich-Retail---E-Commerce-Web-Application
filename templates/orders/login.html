@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign In | Ipswich Retail{% endblock %}
+
+{% block content %}
+<div class="container my-4 my-md-5">
+    <div class="row justify-content-center">
+        <div class="col-11 col-sm-8 col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-4 bg-white">
+                <div class="text-center mb-4">
+                    <div class="brand-badge mx-auto mb-3" style="width: 48px; height: 48px; font-size: 1.5rem;">
+                        <i class="bi bi-cpu-fill"></i>
+                    </div>
+                    <h2 class="h4 fw-bold text-dark mb-1">Welcome Back</h2>
+                    <p class="text-muted small">Sign in to your Ipswich Retail account</p>
+                </div>
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger py-2 small rounded-3 mb-3">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <form method="post" action="{% url 'orders:login' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ next }}">
+
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label small fw-semibold text-dark">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-person"></i></span>
+                            <input type="text" name="username" class="form-control border-start-0" id="id_username" required autofocus placeholder="Enter your username">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="id_password" class="form-label small fw-semibold text-dark">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-lock"></i></span>
+                            <input type="password" name="password" class="form-control border-start-0" id="id_password" required placeholder="Enter your password">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary-brand w-100 py-2 fw-semibold rounded-pill">
+                        Sign In
+                    </button>
+                </form>
+
+                <div class="text-center mt-4 pt-3 border-top">
+                    <p class="small text-muted mb-0">Don't have an account? <a href="{% url 'orders:register' %}" class="text-primary fw-semibold text-decoration-none">Create account</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

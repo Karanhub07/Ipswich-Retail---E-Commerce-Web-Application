@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} | Ipswich Retail{% endblock %}
+
+{% block content %}
+<div class="container my-3 my-md-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'store:product_list' %}"><i class="bi bi-arrow-left me-1"></i> Back to Store</a></li>
+            <li class="breadcrumb-item active text-truncate" style="max-width: 250px;" aria-current="page">{{ product.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white p-3 p-md-4">
+        <div class="row g-4 align-items-center">
+            <!-- Product Image Column -->
+            <div class="col-lg-6">
+                <div class="rounded-4 overflow-hidden position-relative shadow-sm" style="background: #0f172a; aspect-ratio: 4/3;">
+                    <img src="{{ product.image_url }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ product.name }}">
+                    <div class="position-absolute top-0 end-0 m-3">
+                        {% if product.stock > 5 %}
+                        <span class="badge bg-success shadow-sm rounded-pill px-3 py-2">
+                            <i class="bi bi-check-circle-fill me-1"></i> In Stock ({{ product.stock }})
+                        </span>
+                        {% elif product.stock > 0 %}
+                        <span class="badge bg-warning text-dark shadow-sm rounded-pill px-3 py-2">
+                            <i class="bi bi-exclamation-triangle-fill me-1"></i> Only {{ product.stock }} left
+                        </span>
+                        {% else %}
+                        <span class="badge bg-danger shadow-sm rounded-pill px-3 py-2">Out of Stock</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Info Column -->
+            <div class="col-lg-6 ps-lg-4">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    {% if product.category %}
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1 small fw-semibold">{{ product.category.name }}</span>
+                    {% endif %}
+                    <span class="badge bg-light text-muted border px-2 py-1 small">SKU: IP-{{ product.id|stringformat:"04d" }}</span>
+                    <div class="text-warning small d-flex align-items-center gap-1">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <span class="text-muted ms-1">(52 customer reviews)</span>
+                    </div>
+                </div>
+
+                <h1 class="fw-bold mb-3 text-dark" style="font-size: clamp(1.4rem, 2.5vw, 2rem); line-height: 1.25;">
+                    {{ product.name }}
+                </h1>
+
+                <div class="d-flex align-items-baseline gap-3 mb-4">
+                    <span class="display-6 fw-bold text-dark" style="font-size: 2.2rem;">${{ product.price }}</span>
+                    <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill small">Free Express Delivery</span>
+                </div>
+
+                <p class="text-secondary leading-relaxed mb-4" style="font-size: 0.95rem; line-height: 1.6;">
+                    {{ product.description }}
+                </p>
+
+                <!-- Value Props Grid -->
+                <div class="row g-2 mb-4">
+                    <div class="col-sm-4">
+                        <div class="p-2 border rounded-3 bg-light text-center small text-muted">
+                            <i class="bi bi-truck text-primary d-block fs-5 mb-1"></i>
+                            <span class="fw-semibold text-dark">Fast Dispatch</span>
+                            <div class="small text-muted">Within 24 Hours</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="p-2 border rounded-3 bg-light text-center small text-muted">
+                            <i class="bi bi-shield-check text-primary d-block fs-5 mb-1"></i>
+                            <span class="fw-semibold text-dark">2-Yr Warranty</span>
+                            <div class="small text-muted">Official Coverage</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="p-2 border rounded-3 bg-light text-center small text-muted">
+                            <i class="bi bi-arrow-counterclockwise text-primary d-block fs-5 mb-1"></i>
+                            <span class="fw-semibold text-dark">30-Day Returns</span>
+                            <div class="small text-muted">Hassle Free</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add to Cart Form -->
+                {% if product.stock > 0 %}
+                <form action="{% url 'cart:cart_add' product.id %}" method="post" class="p-3 bg-light rounded-4 border">
+                    {% csrf_token %}
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label class="form-label small fw-bold text-muted mb-1 d-block">Quantity</label>
+                            <div class="input-group" style="width: 130px;">
+                                <button type="button" class="btn btn-outline-secondary" onclick="stepDownQty()"><i class="bi bi-dash"></i></button>
+                                <input type="number" id="qtyInput" name="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control text-center fw-bold" required>
+                                <button type="button" class="btn btn-outline-secondary" onclick="stepUpQty({{ product.stock }})"><i class="bi bi-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label class="form-label small text-muted mb-1 d-none d-sm-block">&nbsp;</label>
+                            <button type="submit" class="btn btn-primary-brand btn-lg w-100 d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-cart-plus-fill"></i>
+                                <span>Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                {% else %}
+                <div class="alert alert-secondary py-3 text-center rounded-3">
+                    <i class="bi bi-bell me-2"></i> This item is currently out of stock. Check back soon!
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    function stepDownQty() {
+        const input = document.getElementById('qtyInput');
+        if (input && parseInt(input.value) > 1) {
+            input.value = parseInt(input.value) - 1;
+        }
+    }
+    function stepUpQty(max) {
+        const input = document.getElementById('qtyInput');
+        if (input && parseInt(input.value) < max) {
+            input.value = parseInt(input.value) + 1;
+        }
+    }
+</script>
+{% endblock %}

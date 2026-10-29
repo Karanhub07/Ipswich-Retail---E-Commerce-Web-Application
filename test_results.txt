@@ -1,0 +1,71 @@
+
+Command: coverage run manage.py test
+Ran 26 tests across store, cart, and orders apps:
+
+- store.tests.CategoryModelTests.test_category_str ... OK
+- store.tests.ProductModelTests.test_product_str ... OK
+- store.tests.ProductModelTests.test_product_fields ... OK
+- store.tests.StoreViewTests.test_product_list_view_status_200 ... OK
+- store.tests.StoreViewTests.test_product_filter_by_category ... OK
+- store.tests.StoreViewTests.test_product_search_finds_match ... OK
+- store.tests.StoreViewTests.test_product_search_no_match ... OK
+- store.tests.StoreViewTests.test_product_detail_view_status_200 ... OK
+- store.tests.StoreViewTests.test_product_detail_view_404_missing ... OK
+- store.tests.StoreViewTests.test_health_endpoint_returns_ok ... OK
+- store.tests.StoreViewTests.test_metrics_endpoint_returns_200 ... OK
+- cart.tests.CartContextProcessorTests.test_cart_context_empty ... OK
+- cart.tests.CartContextProcessorTests.test_cart_context_with_items ... OK
+- cart.tests.CartViewTests.test_cart_detail_empty ... OK
+- cart.tests.CartViewTests.test_cart_add_success ... OK
+- cart.tests.CartViewTests.test_cart_add_out_of_stock_rejected ... OK
+- cart.tests.CartViewTests.test_cart_update_quantity ... OK
+- cart.tests.CartViewTests.test_cart_remove_item ... OK
+- orders.tests.OrderModelTests.test_order_str ... OK
+- orders.tests.OrderModelTests.test_order_item_str ... OK
+- orders.tests.OrderViewTests.test_checkout_requires_login ... OK
+- orders.tests.OrderViewTests.test_checkout_empty_cart_redirects ... OK
+- orders.tests.OrderViewTests.test_checkout_creates_order_and_reduces_stock ... OK
+- orders.tests.OrderViewTests.test_order_history_requires_login ... OK
+- orders.tests.OrderViewTests.test_order_history_lists_user_orders ... OK
+- orders.tests.OrderViewTests.test_e2e_register_login_search_add_to_cart_checkout ... OK
+
+----------------------------------------------------------------------
+Ran 26 tests in 14.022s
+
+OK (0 errors, 0 failures)
+System check identified no issues (0 silenced).
+
+======================================================================
+COVERAGE REPORT SUMMARY
+======================================================================
+Name                                                 Stmts   Miss  Cover   Missing
+----------------------------------------------------------------------------------
+cart\__init__.py                                         0      0   100%
+cart\context_processors.py                               4      0   100%
+cart\tests.py                                           50      0   100%
+cart\urls.py                                             4      0   100%
+cart\views.py                                           54      6    89%   31, 46-47, 50-51, 53
+config\__init__.py                                       0      0   100%
+config\settings.py                                      44      6    86%   106-111
+config\urls.py                                           6      0   100%
+manage.py                                               11      2    82%   10-11
+orders\__init__.py                                       0      0   100%
+orders\admin.py                                         14      0   100%
+orders\forms.py                                          7      0   100%
+orders\migrations\0001_initial.py                        7      0   100%
+orders\migrations\__init__.py                            0      0   100%
+orders\models.py                                        20      0   100%
+orders\tests.py                                         76      0   100%
+orders\urls.py                                           5      0   100%
+orders\views.py                                         71     13    82%   36-37, 60-62, 79, 83-88, 93-95
+store\__init__.py                                        0      0   100%
+store\admin.py                                          12      0   100%
+store\migrations\0001_initial.py                         5      0   100%
+store\migrations\0002_category_product_category.py       5      0   100%
+store\migrations\__init__.py                             0      0   100%
+store\models.py                                         20      0   100%
+store\tests.py                                          55      0   100%
+store\urls.py                                            4      0   100%
+store\views.py                                          15      0   100%
+----------------------------------------------------------------------------------
+TOTAL                                                  489     27    94%

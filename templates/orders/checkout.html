@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout | Ipswich Retail{% endblock %}
+
+{% block content %}
+<div class="container my-3 my-md-4">
+    <!-- Breadcrumb / Steps -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h1 class="h3 fw-bold mb-1 text-dark">Checkout</h1>
+            <p class="text-muted small mb-0">Enter your shipping details to complete your order.</p>
+        </div>
+        <div class="d-none d-sm-flex align-items-center gap-2 small text-muted">
+            <span class="text-success"><i class="bi bi-check-circle-fill"></i> Cart</span>
+            <span>&rarr;</span>
+            <span class="fw-bold text-primary"><i class="bi bi-geo-alt-fill"></i> Delivery</span>
+            <span>&rarr;</span>
+            <span><i class="bi bi-credit-card"></i> Confirmation</span>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Form Column -->
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+                <h5 class="fw-bold mb-3 text-dark d-flex align-items-center gap-2">
+                    <i class="bi bi-truck text-primary"></i>
+                    <span>Shipping Address</span>
+                </h5>
+
+                <form method="post" action="{% url 'orders:checkout' %}">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.full_name.id_for_label }}" class="form-label small fw-semibold text-dark">Recipient Full Name</label>
+                        {{ form.full_name }}
+                        {% if form.full_name.errors %}
+                        <div class="text-danger small mt-1">{{ form.full_name.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="{{ form.address.id_for_label }}" class="form-label small fw-semibold text-dark">Complete Delivery Address</label>
+                        {{ form.address }}
+                        {% if form.address.errors %}
+                        <div class="text-danger small mt-1">{{ form.address.errors }}</div>
+                        {% endif %}
+                        <div class="form-text small">Include street address, apartment/suite number, town, and postcode.</div>
+                    </div>
+
+                    <div class="p-3 bg-light rounded-3 mb-4 border d-flex align-items-center gap-3">
+                        <i class="bi bi-cash-coin fs-4 text-primary"></i>
+                        <div>
+                            <div class="fw-semibold small text-dark">Cash on Delivery / Direct DevOps Simulation</div>
+                            <div class="small text-muted">Instant order placement with simulated zero-friction checkout.</div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary-brand btn-lg w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                        <i class="bi bi-check2-circle"></i>
+                        <span>Place Order (${{ total }})</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sidebar Summary -->
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white sticky-top" style="top: 90px;">
+                <h5 class="fw-bold mb-3 text-dark">Items in Order ({{ items|length }})</h5>
+
+                <div class="list-group list-group-flush mb-3">
+                    {% for item in items %}
+                    <div class="list-group-item d-flex align-items-center justify-content-between px-0 py-2 border-light">
+                        <div class="d-flex align-items-center gap-2">
+                            <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}" class="rounded-2" style="width: 48px; height: 48px; object-fit: cover;">
+                            <div>
+                                <h6 class="mb-0 text-truncate text-dark small fw-semibold" style="max-width: 190px;">{{ item.product.name }}</h6>
+                                <span class="text-muted small">Qty: {{ item.quantity }} &times; ${{ item.product.price }}</span>
+                            </div>
+                        </div>
+                        <span class="fw-bold text-dark small">${{ item.subtotal }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted small">Subtotal</span>
+                    <span class="fw-semibold text-dark">${{ total }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="text-muted small">Shipping</span>
+                    <span class="text-success fw-semibold small">FREE Express</span>
+                </div>
+                <hr class="my-2">
+                <div class="d-flex justify-content-between align-items-center pt-2">
+                    <span class="fs-5 fw-bold text-dark">Total Due</span>
+                    <span class="fs-4 fw-bold text-primary">${{ total }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

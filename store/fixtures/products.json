@@ -1,0 +1,170 @@
+[
+  {
+    "model": "store.category",
+    "pk": 1,
+    "fields": {
+      "name": "Audio",
+      "slug": "audio"
+    }
+  },
+  {
+    "model": "store.category",
+    "pk": 2,
+    "fields": {
+      "name": "Displays",
+      "slug": "displays"
+    }
+  },
+  {
+    "model": "store.category",
+    "pk": 3,
+    "fields": {
+      "name": "Peripherals",
+      "slug": "peripherals"
+    }
+  },
+  {
+    "model": "store.category",
+    "pk": 4,
+    "fields": {
+      "name": "Wearables",
+      "slug": "wearables"
+    }
+  },
+  {
+    "model": "store.category",
+    "pk": 5,
+    "fields": {
+      "name": "Power & Charging",
+      "slug": "power-charging"
+    }
+  },
+  {
+    "model": "store.category",
+    "pk": 6,
+    "fields": {
+      "name": "Smart Home",
+      "slug": "smart-home"
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 1,
+    "fields": {
+      "category": 1,
+      "name": "Pro Wireless Noise-Cancelling Headphones",
+      "description": "High-fidelity audio with active noise cancellation, 40-hour battery life, and ultra-comfortable ear cushions.",
+      "price": "149.99",
+      "image_url": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80",
+      "stock": 25
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 2,
+    "fields": {
+      "category": 2,
+      "name": "Ultra Slim 4K IPS Monitor 27-inch",
+      "description": "Vibrant 3840x2160 UHD panel with HDR400, thin bezels, USB-C connectivity, and height-adjustable stand.",
+      "price": "329.99",
+      "image_url": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=800&q=80",
+      "stock": 15
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 3,
+    "fields": {
+      "category": 3,
+      "name": "Mechanical Gaming Keyboard RGB",
+      "description": "Hot-swappable mechanical switches, per-key RGB backlighting, durable aluminum frame, and detachable USB-C cord.",
+      "price": "89.50",
+      "image_url": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80",
+      "stock": 40
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 4,
+    "fields": {
+      "category": 3,
+      "name": "Ergonomic Wireless Mouse",
+      "description": "Precision optical tracking up to 4000 DPI, silent click switches, rechargeable battery, and multi-device pairing.",
+      "price": "39.99",
+      "image_url": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=800&q=80",
+      "stock": 35
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 5,
+    "fields": {
+      "category": 4,
+      "name": "Smartwatch Series 8 Fitness Tracker",
+      "description": "Always-on AMOLED display, heart rate and SpO2 tracking, integrated GPS, sleep monitoring, and water resistant.",
+      "price": "199.00",
+      "image_url": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80",
+      "stock": 20
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 6,
+    "fields": {
+      "category": 5,
+      "name": "Portable Power Bank 20000mAh 65W",
+      "description": "Power Delivery 65W fast charging for laptops, tablets, and phones with clear digital LED battery display.",
+      "price": "54.99",
+      "image_url": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=800&q=80",
+      "stock": 50
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 7,
+    "fields": {
+      "category": 3,
+      "name": "10-in-1 USB-C Multiport Docking Station",
+      "description": "Dual HDMI 4K video outputs, Gigabit Ethernet, 100W PD pass-through, SD card reader, and 3 high-speed USB 3.0 ports.",
+      "price": "69.99",
+      "image_url": "https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=800&q=80",
+      "stock": 18
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 8,
+    "fields": {
+      "category": 3,
+      "name": "4K Ultra HD Streaming Webcam with Mic",
+      "description": "Crystal clear video at 60fps, dual noise-cancelling microphones, automatic light correction, and privacy shutter.",
+      "price": "79.99",
+      "image_url": "https://images.unsplash.com/photo-1588508065123-287b28e013da?auto=format&fit=crop&w=800&q=80",
+      "stock": 22
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 9,
+    "fields": {
+      "category": 1,
+      "name": "True Wireless Earbuds with Wireless Case",
+      "description": "Deep bass, IPX7 sweatproof rating, touch controls, and 30 total hours of playtime with wireless Qi charging case.",
+      "price": "59.99",
+      "image_url": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80",
+      "stock": 30
+    }
+  },
+  {
+    "model": "store.product",
+    "pk": 10,
+    "fields": {
+      "category": 6,
+      "name": "Compact Smart Home Assistant Speaker",
+      "description": "Room-filling 360-degree sound, smart home voice controls, Bluetooth audio streaming, and dual-band WiFi.",
+      "price": "49.99",
+      "image_url": "https://images.unsplash.com/photo-1543512214-318c7553f230?auto=format&fit=crop&w=800&q=80",
+      "stock": 12
+    }
+  }
+]

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Account | Ipswich Retail{% endblock %}
+
+{% block content %}
+<div class="container my-4 my-md-5">
+    <div class="row justify-content-center">
+        <div class="col-11 col-sm-9 col-md-7 col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-4 bg-white">
+                <div class="text-center mb-4">
+                    <div class="brand-badge mx-auto mb-3" style="width: 48px; height: 48px; font-size: 1.5rem;">
+                        <i class="bi bi-cpu-fill"></i>
+                    </div>
+                    <h2 class="h4 fw-bold text-dark mb-1">Create Account</h2>
+                    <p class="text-muted small">Join Ipswich Retail for instant checkout</p>
+                </div>
+
+                <form method="post" action="{% url 'orders:register' %}">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label small fw-semibold text-dark">{{ field.label }}</label>
+                        <input type="{{ field.field.widget.input_type|default:'text' }}" name="{{ field.name }}" id="{{ field.id_for_label }}" class="form-control" {% if field.field.required %}required{% endif %}>
+                        {% if field.help_text %}
+                        <div class="form-text small text-muted" style="font-size: 0.75rem;">{{ field.help_text|safe }}</div>
+                        {% endif %}
+                        {% if field.errors %}
+                        <div class="text-danger small mt-1" style="font-size: 0.8rem;">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+
+                    <button type="submit" class="btn btn-primary-brand w-100 py-2 fw-semibold rounded-pill mt-3">
+                        Create My Account
+                    </button>
+                </form>
+
+                <div class="text-center mt-4 pt-3 border-top">
+                    <p class="small text-muted mb-0">Already registered? <a href="{% url 'orders:login' %}" class="text-primary fw-semibold text-decoration-none">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
